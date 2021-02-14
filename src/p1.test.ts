@@ -1,38 +1,43 @@
 it('should test my code', () => {
-  const heights = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
-
-  expect(trap(heights)).toBe(6);
+  expect(canPartition([1, 5, 11, 5])).toBe(true);
+  expect(canPartition([1, 2, 3, 5])).toBe(false);
+  expect(canPartition([1, 2, 5])).toBe(false);
 });
 
-function trap(heights: number[]): number {
-  let i = 0;
-  let leftMost = 0;
-  const len = heights.length;
-  while (i < len && !leftMost) {
-    leftMost = heights[i];
-    i++;
+function canPartition(nums: number[]): boolean {
+  const sum = nums.reduce((n, a) => n + a, 0);
+  if (sum % 2 !== 0) {
+    return false;
   }
+  const mid = sum / 2;
 
-  let result = 0;
-
-  while (i < len) {
-    let stack = [];
-    while (i < len && leftMost >= heights[i]) {
-      stack.push(heights[i]);
-      i++;
-    }
-
-    if (i === len) {
-      return result;
-    } else {
-      result = stack.reduce((p, c) => p + leftMost - c, result);
-      leftMost = heights[i];
-      i++;
-    }
-  }
-  return result;
+  return subsetSum(nums, mid);
 }
 
-function peek(stack: number[]) {
-  return stack[stack.length - 1];
-}
+const subsetSum = (nums: number[], sum: number): boolean => {
+  const n = nums.length;
+
+  let dp: boolean[][] = [];
+
+  for (var a = 0; a <= n; a++) {
+    dp[a] = [];
+    dp[a][0] = true;
+  }
+  for (var a = 1; a <= sum; a++) {
+    dp[0][a] = false;
+  }
+
+  for (var i = 1; i <= n; i++) {
+    for (var j = 1; j <= sum; j++) {
+      const currNum = nums[i - 1];
+      const currSum = j;
+      if (currNum > currSum) {
+        dp[i][j] = dp[i - 1][j];
+      } else {
+        dp[i][j] = dp[i - 1][j] || dp[i - 1][currSum - currNum];
+      }
+    }
+  }
+
+  return dp[n][sum];
+};

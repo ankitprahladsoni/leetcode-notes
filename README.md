@@ -55,6 +55,28 @@ public int largestRectangleArea(int[] heights) {
 
 Upar histogram wali problem ka hi variation hai, har ek row ko histogram me convert kardo histogram me, aur upar wala code se area nikal lo max. Flat karna hai bas har row ko.
 
+## 416. Partition Equal Subset Sum
+
+Napsak ka problem, old sum hai toh definitely nahi hoga, even hua toh ya toh koi number lo ya toh mat lo
+
+```java
+dp[n + 1][sum + 1]
+top row false // 0 element se sum nahi banega
+first column true // koi bhi element se sum 0
+for (var i = 1; i <= n; i++) {
+    for (var j = 1; j <= sum; j++) {
+      const currNum = nums[i - 1];
+      const currSum = j;
+      if (currNum > currSum) {
+        dp[i][j] = dp[i - 1][j]; // definitely nahi lena is element ko
+      } else {
+        dp[i][j] = dp[i - 1][j] // ya toh nahi liya
+        || dp[i -1][currSum - currNum]; // aur agar liya, toh sum - current bhi subset ka part hai kya?
+      }
+    }
+}
+```
+
 ## 1167. Minimum cost to connect sticks
 
 sabse choti sticks lo, chipakao, heap me daale, firse 2 min stick lo, ez, pz
