@@ -61,7 +61,7 @@ sabse choti sticks lo, chipakao, heap me daale, firse 2 min stick lo, ez, pz
 
 ```java
 public int connectSticks(int[] sticks) {
-                if(sticks == null || sticks.length < 2){
+    if(sticks == null || sticks.length < 2){
         return 0;
     }
 
