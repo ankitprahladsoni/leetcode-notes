@@ -54,3 +54,29 @@ public int largestRectangleArea(int[] heights) {
 ## 85. Maximal Rectangle
 
 Upar histogram wali problem ka hi variation hai, har ek row ko histogram me convert kardo histogram me, aur upar wala code se area nikal lo max. Flat karna hai bas har row ko.
+
+## 1167. Minimum cost to connect sticks
+
+sabse choti sticks lo, chipakao, heap me daale, firse 2 min stick lo, ez, pz
+
+```java
+public int connectSticks(int[] sticks) {
+                if(sticks == null || sticks.length < 2){
+        return 0;
+    }
+
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+    for(int num : sticks){
+        minHeap.add(num);
+    }
+
+    int res = 0;
+    while(minHeap.size() > 1){
+        int merge = minHeap.poll() + minHeap.poll();
+        res += merge;
+        minHeap.add(merge);
+    }
+
+    return res;
+}
+```
