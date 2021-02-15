@@ -55,6 +55,11 @@ public int largestRectangleArea(int[] heights) {
 
 Upar histogram wali problem ka hi variation hai, har ek row ko histogram me convert kardo histogram me, aur upar wala code se area nikal lo max. Flat karna hai bas har row ko.
 
+## 322. Coin Change
+
+aisa lagega ki sort karke greedy lagalo, par DP fast padega  
+[link](https://leetcode.com/problems/coin-change/discuss/77385/DP-AC-JAVA-Solution-18ms-Beating-95)
+
 ## 416. Partition Equal Subset Sum
 
 Napsak ka problem, old sum hai toh definitely nahi hoga, even hua toh ya toh koi number lo ya toh mat lo
@@ -76,6 +81,19 @@ for (var i = 1; i <= n; i++) {
     }
 }
 ```
+
+### isme subset sum to specific number bhi ho jayega
+
+aur koi puche ki minimum diff partition karo, toh subset sum hi nikalo till range (all sum), matrix ke last row me wahi line true hogi jiske column (currentSum) ka subset ban sakta hai. Toh woh columns lo, uske mid value check karo aur return karo.
+
+| element      | column 1 | column 2 | column 3 | ... | max sum |
+| ------------ | -------- | -------- | -------- | --- | ------- |
+| last element | T        | F        | T        | ... | T       |
+
+### subset with diff equal to k
+
+usme bhi subset sum hi nikalna hai, s1 - s2 = diff, s1 + s2 = maxSum, toh s1 = (maxsum + diff)/2  
+jo answer aaya, uski ka subset count nikalna hai
 
 ## 1167. Minimum cost to connect sticks
 
