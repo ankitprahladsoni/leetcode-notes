@@ -27,6 +27,45 @@ public int trap(int[] A){
 }
 ```
 
+## 72. Edit distance
+
+kaafi similar hai subsequence jaisa. match karta hai character toh aage badh jao. match nahi hota woh delete, add ya replace karna hai.
+toh dp me add karna toh upar wala string, delete karna toh side wala string, replace karna toh diagonal. iska minimum lo aur dp me daal do
+
+```java
+public int minDistance(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+        int[][] cost = new int[m+1][n+1];
+        // base
+        for (int i=0;i<=m;i++){
+            cost[i][0] =i;
+        }
+
+        for (int j=0;j<=n;j++){
+            cost[0][j] = j;
+        }
+
+        // for String comparing, we must make i,j below the border
+        // thus we have add 1 to every i and j in the cost array
+        // to perform bottom-up iteration
+        for (int i=0;i<m;i++){
+            for (int j=0;j<n;j++){
+                if (word1.charAt(i) == word2.charAt(j)){
+                    cost[i+1][j+1] = cost[i][j];
+                }
+                else{
+                    int add = cost[i][j+1];
+                    int delete = cost[i+1][j];
+                    int rep = cost[i][j];
+                    cost[i+1][j+1] = Math.min(Math.min(add,delete),rep)+1;
+                }
+            }
+        }
+        return cost[m][n];
+    }
+```
+
 ## 84. Largest Rectangle in Histogram
 
 _Easier approach:_ Nearest smaller element to left aur Nearest smaller element to right ka array banao, usse niklegi width, woh width se area nikalo [Link](<https://leetcode.com/problems/largest-rectangle-in-histogram/discuss/28902/5ms-O(n)-Java-solution-explained-(beats-96)>)  
@@ -54,6 +93,32 @@ public int largestRectangleArea(int[] heights) {
 ## 85. Maximal Rectangle
 
 Upar histogram wali problem ka hi variation hai, har ek row ko histogram me convert kardo histogram me, aur upar wala code se area nikal lo max. Flat karna hai bas har row ko.
+
+## 128. Longest consecutive sequence given array of number
+
+sab number set me daal do. Fir ek ek se check karo ki set me hai ya nahi uske pehle wala. Agar hai toh iska matlab woh starting point nahi hoga.
+Jab potential starting point mile, tab check karo ki next consecutive elements hai ya nahi aur length update karte raho.
+Technically O(n) me ho jayega
+
+```java
+ public int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for(int n:nums){
+            set.add(n);
+        }
+        int ans = 0;
+        for (int n : nums) {
+            if (!set.contains(n - 1)) {
+                int y = n + 1;
+                while (set.contains(y)) {
+                    y++;
+                }
+                ans = Math.max(ans, y - n);
+            }
+        }
+        return ans;
+    }
+```
 
 ## 322. Coin Change
 
