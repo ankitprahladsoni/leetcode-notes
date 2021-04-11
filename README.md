@@ -185,3 +185,22 @@ public int connectSticks(int[] sticks) {
     return res;
 }
 ```
+
+## 1539. Kth Missing Positive Number
+
+sort array hai, batao ki kaunsa Kth number nahi hai array me.
+Sorted hai toh binary search lag jayega, usme dekho ki mid element kya hai, aur uski location kya hai, dono ka difference batayega ki kitne terms left side me already covered hai  
+`arr[mid] - (mid + 1) <= k` matlab ki diff jo hai woh k se kam hai toh thode hi elements miss hue hai left side,toh `l = mid + 1` kardo, nahi toh `r = mid`.  
+last me answer aayega `l + k`, kyuki ab `l` waha hai jaha pe `r` hai, uar jitne left covered hai, uske `k` terms baad wala hi missing hai.
+
+```java
+   public int findKthPositive(int[] arr, int k) {
+        int l = 0, r = arr.length;
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (arr[mid] - (mid + 1) >= k) r = mid;  //missed more or equal than k numbers, left side;
+            else l = mid + 1;   // missed less than k numbers, must be in the right side;
+        }
+        return l + k;
+    }
+```
