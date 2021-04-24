@@ -1,3 +1,4 @@
+import collections
 from typing import List
 import heapq
 
@@ -10,32 +11,21 @@ class TreeNode:
 
 
 class Solution:
-    result = 0
+    def minDeletions(self, s: str) -> int:
+        freq = collections.Counter(list(s))
+        seen = set()
+        result = 0
+        for val, count in freq.items():
+            while count in seen:
+                count -= 1
+                result += 1
+            seen.add(count)
 
-    def dfs(self, root, maxVal):
-
-        if not root:
-            return
-
-        if root.val >= maxVal:
-            self.result += 1
-        maxVal = max(root.val, maxVal)
-        dfs(root.left, maxVal)
-        dfs(root.right, maxVal)
-
-    def goodNodes(self, root: TreeNode) -> int:
-
-        dfs(root, root.val)
-        return self.result
+        return result
 
 
-obj = Solution()
+sol = Solution()
+print(sol.minDeletions("bbcebab"))
 
-c = 1
-a = []
-b = [1]
 
-if c:
-    print("a")
-else:
-    print(" no a ")
+print("another cell")
